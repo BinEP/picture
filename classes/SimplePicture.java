@@ -351,6 +351,7 @@ public class SimplePicture implements DigitalPicture
  {
    int width = getWidth();
    int height = getHeight();
+   SimplePicture p = new Picture();
    Pixel[][] pixelArray = new Pixel[height][width];
    
    // loop through height rows from top to bottom
