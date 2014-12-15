@@ -322,9 +322,9 @@ public class Picture extends SimplePicture {
 		Pixel[][] toPixels = this.getPixels2D();
 		Pixel[][] fromPixels = fromPic.getPixels2D();
 		for (int fromRow = startRow, toRow = insRow; fromRow < endRow
-				&& toRow < toPixels.length; fromRow++, toRow++) {
+				&& toRow < insRow + fromPixels.length; fromRow++, toRow++) {
 			for (int fromCol = startCol, toCol = insCol; fromCol < endCol
-					&& toCol < toPixels[0].length; fromCol++, toCol++) {
+					&& toCol < insCol + toPixels[0].length; fromCol++, toCol++) {
 				fromPixel = fromPixels[fromRow][fromCol];
 				toPixel = toPixels[toRow][toCol];
 				toPixel.setColor(fromPixel.getColor());
@@ -350,18 +350,43 @@ public class Picture extends SimplePicture {
 	public void createSectionCollage() {
 		Picture flower1 = new Picture("flower1.jpg");
 		Picture flower2 = new Picture("flower2.jpg");
-		this.copy(flower1, 0, 0, 0, 20, 40, 45);
-		this.copy(flower2, 100, 0, 0, 20, 40, 45);
-		this.copy(flower1, 200, 0, 0, 20, 40, 45);
+		this.copy(flower1, 0, 0, 0, 40, 70, 80);
+		this.copy(flower2, 100, 0, 0, 40, 70, 80);
+		this.copy(flower1, 200, 0, 0, 40, 70, 80);
 		Picture flowerNoBlue = new Picture(flower2);
 		flowerNoBlue.zeroBlue();
-		this.copy(flowerNoBlue, 300, 0, 0, 20, 40, 45);
-		this.copy(flower1, 400, 0, 0, 20, 40, 45);
+		this.copy(flowerNoBlue, 300, 0, 0, 40, 70, 80);
+		this.copy(flower1, 400, 0, 0, 40, 70, 80);
 		//this.copy(flower2, 500, 0, 250, 250, 300, 300);
 		this.mirrorVertical();
 		this.write("640x480.jpg");
 	}
-
+	public void createMyCollage() {
+		Picture beach = new Picture("beach.jpg");
+		Picture moon = new Picture("moon-surface.jpg");
+		Picture motorcycle = new Picture("blueMotorcycle.jpg");
+		this.copy(beach, 0, 0, 0, 0, 160, 213);
+		this.copy(moon, 160, 214, 160, 214, 320, 427);
+		this.copy(motorcycle, 320, 427, 320, 427, 480, 640);
+		Picture moonGray = new Picture(moon);
+		moonGray.grayscale();
+		this.copy(moonGray, 320, 0, 320, 0, 480, 213);
+		Picture mirrorMotor = new Picture(motorcycle);
+		mirrorMotor.mirrorDiagonal();
+		this.copy(mirrorMotor, 0, 213, 0, 213, 160, 426);
+		Picture mirrorBeach = new Picture(beach);
+		mirrorBeach.mirrorVertical();
+		this.copy(mirrorBeach, 320, 214, 320, 214, 480, 427);
+		Picture beachNoBlue = new Picture(beach);
+		beachNoBlue.zeroBlue();
+		this.copy(beachNoBlue, 160, 427, 160, 427, 320, 640);
+		Picture mirrorMotorH = new Picture(motorcycle);
+		mirrorMotorH.mirrorHorizontal();
+		this.copy(mirrorMotorH, 160, 0, 160, 0, 320, 213);
+		//this.copy(flower2, 500, 0, 250, 250, 300, 300);
+		//this.mirrorVertical();
+		this.write("640x480.jpg");
+	}
 	/**
 	 * Method to show large changes in color
 	 * 
